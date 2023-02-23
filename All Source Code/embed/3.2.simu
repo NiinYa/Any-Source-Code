@@ -1,0 +1,9 @@
+<circuit type="simulide_0.4" speed="1000000" animate="212" noLinAcc="5" reactStep="50">
+ 
+Arduino Uno-1: 
+<item labelx="100" objectName="Arduino Uno-1" Auto_Load="false" valLabely="0" labelrot="0" Logic_Symbol="false" rotation="0" y="-464" vflip="1" valLabelx="0" valLabRot="0" hflip="1" itemtype="Arduino" x="-468" Program="" Mhz="16" Show_id="true" eeprom="" labely="-21" Init_gdb="false" id="Arduino Uno-1"/>
+ 
+PlotterWidget: 
+<item accessibleName="" maximumWidth="1000" accessibleDescription="" enabled="true" inputMethodHints="0" baseSize="" windowFilePath="" isActiveWindow="true" font="MS Shell Dlg 2,8.25,-1,5,50,0,0,0,0,0" y="0" windowOpacity="1" styleSheet="" modal="false" windowIcon="" statusTip="" childrenRegion="" geometry="" minimumWidth="200" itemtype="Plotter" Tracks="1" objectName="PlotterWidget" minimized="false" width="200" cursor="" Scale="1" fullScreen="false" layoutDirection="0" rect="" windowIconText="" palette="" windowModality="0" sizeHint="" frameSize="" size="" acceptDrops="false" sizePolicy="" windowTitle="" x="0" toolTipDuration="-1" whatsThis="" maximumSize="" pos="" sizeIncrement="" normalGeometry="" autoFillBackground="false" frameGeometry="" updatesEnabled="true" MaxVolt="500" minimumSize="" childrenRect="" focus="false" contextMenuPolicy="1" MinVolt="-500" mouseTracking="false" toolTip="" minimumSizeHint="" maximized="false" height="200" minimumHeight="200" visible="false" locale="" maximumHeight="200" windowModified="false" focusPolicy="0"/>
+ 
+</circuit>
