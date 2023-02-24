@@ -1,0 +1,146 @@
+
+percobaan 3.3.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000ba  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000010e  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000010e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000140  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  0000017c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005cc  00000000  00000000  000001a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000555  00000000  00000000  00000770  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000022a  00000000  00000000  00000cc5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000044  00000000  00000000  00000ef0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002fa  00000000  00000000  00000f34  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000003c  00000000  00000000  0000122e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  0000126a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 45 00 	jmp	0x8a	; 0x8a <__vector_19>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+#include <avr/io.h>
+#include <avr/interrupt.h>
+int main(void)
+{
+	// Set Port C sebagai output
+	DDRC=0xFF;
+  6c:	8f ef       	ldi	r24, 0xFF	; 255
+  6e:	84 bb       	out	0x14, r24	; 20
+	// Set Port C sebagai output Active Low
+	PORTC=0x00;
+  70:	15 ba       	out	0x15, r1	; 21
+	// Set Port B sebagai input (T0 adalah PB0)
+	DDRB=0x00;
+  72:	17 ba       	out	0x17, r1	; 23
+	PORTB=0xFF;
+  74:	88 bb       	out	0x18, r24	; 24
+	// Aktifkan Timer 0 sebagai interupsi trigger eksternal
+	TCCR0=0x06;
+  76:	86 e0       	ldi	r24, 0x06	; 6
+  78:	83 bf       	out	0x33, r24	; 51
+	// Nilai Counter Pembanding Timer 0
+	TCNT0=0xFC;
+  7a:	8c ef       	ldi	r24, 0xFC	; 252
+  7c:	82 bf       	out	0x32, r24	; 50
+	OCR0=0x00;
+  7e:	1c be       	out	0x3c, r1	; 60
+	// Timer Overflow Flag akan di clear setelah interupsi jalan
+	TIFR= 0x02;
+  80:	82 e0       	ldi	r24, 0x02	; 2
+  82:	88 bf       	out	0x38, r24	; 56
+	// Mengaktifkan Output Compare Interrupt di Timer 0
+	TIMSK=0x02;
+  84:	89 bf       	out	0x39, r24	; 57
+	// Global enable interrupts
+	sei();
+  86:	78 94       	sei
+  88:	ff cf       	rjmp	.-2      	; 0x88 <main+0x1c>
+
+0000008a <__vector_19>:
+	while (1){}
+}
+// Timer 0 Output Comparator interrupt service routine
+ISR (TIMER0_COMP_vect) {
+  8a:	1f 92       	push	r1
+  8c:	0f 92       	push	r0
+  8e:	0f b6       	in	r0, 0x3f	; 63
+  90:	0f 92       	push	r0
+  92:	11 24       	eor	r1, r1
+  94:	8f 93       	push	r24
+	// Inisialisasi kembali Nilai Counter Pembanding Timer 0
+	TCNT0=0xFC;
+  96:	8c ef       	ldi	r24, 0xFC	; 252
+  98:	82 bf       	out	0x32, r24	; 50
+	OCR0=0x00;
+  9a:	1c be       	out	0x3c, r1	; 60
+	// Cek PIN C
+	if (PINC==0) PORTC=0xFF;
+  9c:	83 b3       	in	r24, 0x13	; 19
+  9e:	81 11       	cpse	r24, r1
+  a0:	03 c0       	rjmp	.+6      	; 0xa8 <__vector_19+0x1e>
+  a2:	8f ef       	ldi	r24, 0xFF	; 255
+  a4:	85 bb       	out	0x15, r24	; 21
+  a6:	01 c0       	rjmp	.+2      	; 0xaa <__vector_19+0x20>
+	else PORTC=0x00;
+  a8:	15 ba       	out	0x15, r1	; 21
+  aa:	8f 91       	pop	r24
+  ac:	0f 90       	pop	r0
+  ae:	0f be       	out	0x3f, r0	; 63
+  b0:	0f 90       	pop	r0
+  b2:	1f 90       	pop	r1
+  b4:	18 95       	reti
+
+000000b6 <_exit>:
+  b6:	f8 94       	cli
+
+000000b8 <__stop_program>:
+  b8:	ff cf       	rjmp	.-2      	; 0xb8 <__stop_program>
