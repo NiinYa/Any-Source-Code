@@ -1,0 +1,140 @@
+
+tugas 3.4.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000bc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000110  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000110  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000140  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000028  00000000  00000000  0000017c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005cc  00000000  00000000  000001a4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000555  00000000  00000000  00000770  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000022a  00000000  00000000  00000cc5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000044  00000000  00000000  00000ef0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002f1  00000000  00000000  00000f34  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000003c  00000000  00000000  00001225  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000018  00000000  00000000  00001261  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 45 00 	jmp	0x8a	; 0x8a <__vector_8>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 5c 00 	jmp	0xb8	; 0xb8 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+#define F_CPU 1000000UL
+#include <util/delay.h>
+#include <avr/interrupt.h>
+int main(void)
+{
+	DDRC=0xFF;
+  6c:	8f ef       	ldi	r24, 0xFF	; 255
+  6e:	84 bb       	out	0x14, r24	; 20
+	PORTC=0x00;
+  70:	15 ba       	out	0x15, r1	; 21
+	DDRB=0x00;
+  72:	17 ba       	out	0x17, r1	; 23
+	PORTB=0xFF;
+  74:	88 bb       	out	0x18, r24	; 24
+	TCCR1B=0x06;
+  76:	96 e0       	ldi	r25, 0x06	; 6
+  78:	9e bd       	out	0x2e, r25	; 46
+	TCNT1H=0xFF;
+  7a:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L=0xFE;
+  7c:	8e ef       	ldi	r24, 0xFE	; 254
+  7e:	8c bd       	out	0x2c, r24	; 44
+
+	TIFR=(1<<TOV1);
+  80:	84 e0       	ldi	r24, 0x04	; 4
+  82:	88 bf       	out	0x38, r24	; 56
+	TIMSK=(1<<TOIE1);
+  84:	89 bf       	out	0x39, r24	; 57
+	sei();
+  86:	78 94       	sei
+  88:	ff cf       	rjmp	.-2      	; 0x88 <main+0x1c>
+
+0000008a <__vector_8>:
+	while (1){}
+}
+ISR (TIMER1_OVF_vect) {
+  8a:	1f 92       	push	r1
+  8c:	0f 92       	push	r0
+  8e:	0f b6       	in	r0, 0x3f	; 63
+  90:	0f 92       	push	r0
+  92:	11 24       	eor	r1, r1
+  94:	8f 93       	push	r24
+	TCNT1H=0xFF;
+  96:	8f ef       	ldi	r24, 0xFF	; 255
+  98:	8d bd       	out	0x2d, r24	; 45
+	TCNT1L=0xFE;
+  9a:	8e ef       	ldi	r24, 0xFE	; 254
+  9c:	8c bd       	out	0x2c, r24	; 44
+
+	if (PINC==0) PORTC=0xFF;
+  9e:	83 b3       	in	r24, 0x13	; 19
+  a0:	81 11       	cpse	r24, r1
+  a2:	03 c0       	rjmp	.+6      	; 0xaa <__vector_8+0x20>
+  a4:	8f ef       	ldi	r24, 0xFF	; 255
+  a6:	85 bb       	out	0x15, r24	; 21
+  a8:	01 c0       	rjmp	.+2      	; 0xac <__vector_8+0x22>
+	else PORTC=0x00;
+  aa:	15 ba       	out	0x15, r1	; 21
+}
+  ac:	8f 91       	pop	r24
+  ae:	0f 90       	pop	r0
+  b0:	0f be       	out	0x3f, r0	; 63
+  b2:	0f 90       	pop	r0
+  b4:	1f 90       	pop	r1
+  b6:	18 95       	reti
+
+000000b8 <_exit>:
+  b8:	f8 94       	cli
+
+000000ba <__stop_program>:
+  ba:	ff cf       	rjmp	.-2      	; 0xba <__stop_program>
